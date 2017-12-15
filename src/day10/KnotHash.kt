@@ -1,10 +1,8 @@
-
 package day10
 
 import kotlin.math.min
 
-//TODO: Use Bytes instead of Integer...
-class KnotHash(baseLen: Int) {
+class KnotHash(baseLen: Int = 256) {
     // salt for input challenge #2
     var salt = listOf(17, 31, 73, 47, 23)
 
@@ -21,22 +19,21 @@ class KnotHash(baseLen: Int) {
         printState()
     }
 
-    //TODO create utility function wich takes a list of instructions
     fun knot1(single: Int? = null, multiple: List<Int> = listOf(), idx: Int = posIdx) : List<Int> {
         val instructions = if(single != null) listOf(single) else multiple
-        return this.oneKnotBase(instructions,idx)
+        instructions.forEach { this.oneKnot(it,idx) }
+        return state
     }
 
     fun knot2(baseInstr: String) : List<Int> {
         val instrASCII = baseInstr.map { it.toASCII() } + salt
-
         (0 until 64).forEach {
-            instrASCII.forEach { oneKnotBase(it) }
+            instrASCII.forEach { oneKnot(it) }
         }
         return state
     }
 
-    fun oneKnotBase(instruction: Int, idx: Int = posIdx) : List<Int> {
+    private fun oneKnot(instruction: Int, idx: Int = posIdx) : List<Int> {
         state = state.substitueAtIdx(idx, state.subListCascading(idx, instruction).asReversed())
         posIdx = (skipSize + instruction + posIdx) % state.size
         skipSize += 1
@@ -49,8 +46,7 @@ class KnotHash(baseLen: Int) {
     fun toHex() : String = state.dense16().toHex()
 
     private fun printState() {
-        val toPrint = state.joinToString(" ")
-        println(toPrint)
+        println(state.joinToString(" "))
     }
 }
 

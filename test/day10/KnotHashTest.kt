@@ -61,8 +61,7 @@ class KnotHashTest {
     @Test
     fun `knot 3,2 for {(0 1 2) 3} to {2) 1 0 (3} to {3 1 0 2}`() {
         val hash = KnotHash(4)
-        hash.knot1(3)
-        hash.knot1(2)
+        hash.knot1(multiple = listOf(3,2))
         assertEquals(listOf(3,1,0,2), hash.toIntList())
     }
 
@@ -90,7 +89,7 @@ class KnotHashTest {
     }
     @Test
     fun `part1 challenge`() {
-        val hash = KnotHash(256)
+        val hash = KnotHash()
         challengeIntList.forEach { hash.knot1(it) }
         val resList = hash.toIntList()
         assertEquals(52070, resList[0] * resList[1])
@@ -123,25 +122,25 @@ class KnotHashTest {
     }
     @Test
     fun `part2 example empty String`() {
-        var hash = KnotHash(256)
+        var hash = KnotHash()
         hash.knot2("")
         assertEquals("a2582a3a0e66e6e86e3812dcb672a272", hash.toHex())
 
-        hash = KnotHash(256)
+        hash = KnotHash()
         hash.knot2("AoC 2017")
         assertEquals("33efeb34ea91902bb2f59c9920caa6cd", hash.toHex())
 
-        hash = KnotHash(256)
+        hash = KnotHash()
         hash.knot2("1,2,3")
         assertEquals("3efbe78a8d82f29979031a4aa0b16a9d", hash.toHex())
 
-        hash = KnotHash(256)
+        hash = KnotHash()
         hash.knot2("1,2,4")
         assertEquals("63960835bcdc130f0b66d7ff4f6a5a8e", hash.toHex())
     }
     @Test
     fun `part2 challenge`() {
-        var hash = KnotHash(256)
+        var hash = KnotHash()
         hash.knot2(challenge)
         assertEquals("7f94112db4e32e19cf6502073c66f9bb", hash.toHex())
     }
