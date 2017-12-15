@@ -1,4 +1,4 @@
-I **try** to solve https://adventofcode.com/ in Kotlin.
+My **attempt** to solve https://adventofcode.com/2017 in Kotlin.
 
 
 I don't know if I love or hate this?:
