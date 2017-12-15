@@ -1,0 +1,29 @@
+buildscript {
+    ext.kotlin_version = '1.2.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.0"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+
+sourceSets {
+    main.java.srcDirs += 'src'
+    test.java.srcDirs += 'test'
+    test.resources.srcDirs += 'resources'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.2.0"
+    testCompile 'junit:junit:4.12'
+}
