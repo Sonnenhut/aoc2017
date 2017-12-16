@@ -2,35 +2,38 @@ package day12
 
 class DigitalPlumber {
     companion object {
-
+        // part1
         fun groupSize(search: Int, pipes: List<String>) : Int {
             return groupPipes(pipes).first { set: Set<Int> -> set.contains(search) }.size
         }
+
+        // part2
         fun groupCount(pipes: List<String>) : Int {
             return groupPipes(pipes).size
         }
 
         fun groupPipes(pipes : List<String>) : Set<Set<Int>> {
-            val flatGroups = pipes.map {
-                val itSimple = it.split("<->")
-                val caller = itSimple[0].trim()
-                val callees = itSimple[1].split(",").map { it.trim() }
-                (callees + caller).map { it.toInt() }.toSet()
-            }
+            val flatGroups = flatGroups(pipes)
 
-            val joinedGroups = flatGroups.fold(listOf<Set<Int>>()) { acc, group ->
-                //reduce { acc, set -> acc + set }
+            return flatGroups.fold(listOf<Set<Int>>()) { acc, group ->
+                var newAcc = acc
                 val toCombine: List<Set<Int>> = acc.filter { it.containsAnyOf(group) }
-                var res = acc
                 // remove all elements that can be combined
-                toCombine.forEach { elem: Set<Int> -> res = res.minus<Set<Int>>(elem) }
+                toCombine.forEach { elem: Set<Int> -> newAcc = newAcc.minus<Set<Int>>(elem) }
                 // combine everything that can be combined
                 val combined = toCombine.fold (group) { acc, other -> acc + other}
-                res = res.plus<Set<Int>>(combined)
-                res
+                newAcc = newAcc.plus<Set<Int>>(combined)
+                newAcc
             }.toSet()
+        }
 
-            return joinedGroups
+        private fun flatGroups(pipes: List<String>): List<Set<Int>> {
+            return pipes.map {
+                val split = it.split("<->")
+                val caller = split[0].trim().toInt()
+                val callees = split[1].split(",").map { it.trim().toInt() }
+                (callees + caller).toSet()
+            }
         }
 
         private fun Set<Int>.containsAnyOf(other: Set<Int>): Boolean = this.any { other.contains(it) }
