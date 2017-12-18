@@ -4,7 +4,9 @@ import kotlin.math.min
 
 class KnotHash(baseLen: Int = 256) {
     // salt for input challenge #2
-    var salt = listOf(17, 31, 73, 47, 23)
+    private var salt = listOf(17, 31, 73, 47, 23)
+
+    private val shouldPrintState: Boolean = false
 
     // ascii representation of input
     private var state = (0 until baseLen).toList()
@@ -46,7 +48,7 @@ class KnotHash(baseLen: Int = 256) {
     fun toHex() : String = state.dense16().toHex()
 
     private fun printState() {
-        println(state.joinToString(" "))
+        if(shouldPrintState) println(state.joinToString(" "))
     }
 }
 
