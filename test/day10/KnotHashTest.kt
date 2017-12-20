@@ -59,10 +59,10 @@ class KnotHashTest {
     }
 
     @Test
-    fun `knot 3,2 for {(0 1 2) 3} to {2) 1 0 (3} to {3 1 0 2}`() {
+    fun `knot 3,2 for {(0 1 2) 3} to {2) 1 (0 3} to {3 1 0 2}`() {
         val hash = KnotHash(4)
-        hash.knot1(multiple = listOf(3,2))
-        assertEquals(listOf(3,1,0,2), hash.toIntList())
+        hash.knot1(multiple = listOf(3,3))
+        assertEquals(listOf(0,1,2,3), hash.toIntList())
     }
 
     @Test
