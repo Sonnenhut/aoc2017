@@ -10,62 +10,62 @@ class FractalArtTest {
 
     @Test
     fun `2x2 square matches rule with exact rotation`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |..
                     |.#
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertTrue(rule.matches(input))
     }
     @Test
     fun `3x3 square not matches because of mismatching dimension`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |..
                     |.#
                     |..
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertFalse(rule.matches(input))
     }
     @Test
     fun `2x2 convert to 3x3 square`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |..
                     |.#
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |##.
                     |#..
                     |...
-                    """.trimMargin().lines()
-        assertEquals(expected, rule.invoke(input))
+                    """.toSquare()
+        assertEquals(expected, rule.apply(input))
     }
     @Test
     fun `2x2 matches rotated 90°`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |..
                     |#.
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertTrue(rule.matches(input))
     }
     @Test
     fun `2x2 matches rotated -90°`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |.#
                     |..
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertTrue(rule.matches(input))
     }
     @Test
     fun `2x2 matches rotated 180°`() {
-        val rule = Rule("../.# => ##./#../...")
+        val rule = "../.# => ##./#../...".toRule()
         val input = """
                     |#.
                     |..
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertTrue(rule.matches(input))
     }
 
@@ -76,7 +76,7 @@ class FractalArtTest {
                     |....
                     |....
                     |#..#
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = listOf("""
                     |#.
                     |..
@@ -89,7 +89,7 @@ class FractalArtTest {
                     ""","""
                     |..
                     |.#
-                    """).map { it.trimMargin().lines() }
+                    """).map { it.toSquare() }
         assertEquals(expected, splitSquares(input))
     }
     @Test
@@ -101,7 +101,7 @@ class FractalArtTest {
                     |334455
                     |667788
                     |667788
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = (0..8).map { listOf("$it$it","$it$it") }
         assertEquals(expected, splitSquares(input))
     }
@@ -117,7 +117,7 @@ class FractalArtTest {
                     |6A67A78A8
                     |6B67B78B8
                     |6C67C78C8
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = (0..8).map { listOf("${it}A$it","${it}B$it","${it}C$it") }
         assertEquals(expected, splitSquares(input))
     }
@@ -136,13 +136,13 @@ class FractalArtTest {
                     |ooppqqrrsstt
                     |uuvvwwxxyyzz
                     |uuvvwwxxyyzz
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = ((0..9) + ('a'..'z')).map { listOf("$it$it","$it$it") }
         assertEquals(expected, splitSquares(input))
     }
     @Test
     fun `join 12x12 works`() {
-        val input = ((0..9) + ('a'..'z')).map { listOf("$it$it","$it$it") }
+        val input = ((0..9) + ('a'..'z')).map { listOf("$it$it","$it$it").asSquare() }
         val expected = """
                     |001122334455
                     |001122334455
@@ -156,12 +156,12 @@ class FractalArtTest {
                     |ooppqqrrsstt
                     |uuvvwwxxyyzz
                     |uuvvwwxxyyzz
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.joinSquares())
     }
     @Test
     fun `join 9 4x4 to 12x12 works`() {
-        val input = ((0..9) + ('a'..'b')).map { listOf("$it$it$it$it","$it$it$it$it","$it$it$it$it","$it$it$it$it") }
+        val input = ((0..9) + ('a'..'b')).map { listOf("$it$it$it$it","$it$it$it$it","$it$it$it$it","$it$it$it$it").asSquare() }
         val expected = """
                     |000011112222
                     |000011112222
@@ -179,12 +179,12 @@ class FractalArtTest {
                     |9999aaaabbbb
                     |9999aaaabbbb
                     |9999aaaabbbb
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.joinSquares())
     }
     @Test
     fun `join 9 squares works`() {
-        val input = (0..8).map { listOf("$it$it$it","$it$it$it","$it$it$it") }
+        val input = (0..8).map { listOf("$it$it$it","$it$it$it","$it$it$it").asSquare() }
         val expected = """
                     |000111222
                     |000111222
@@ -195,12 +195,12 @@ class FractalArtTest {
                     |666777888
                     |666777888
                     |666777888
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.joinSquares())
     }
     @Test
     fun `join 6x6 squares works`() {
-        val input = (0..8).map { listOf("$it$it","$it$it") }
+        val input = (0..8).map { listOf("$it$it","$it$it").asSquare() }
         val expected = """
                     |001122
                     |001122
@@ -208,7 +208,7 @@ class FractalArtTest {
                     |334455
                     |667788
                     |667788
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.joinSquares())
     }
     @Test
@@ -216,7 +216,7 @@ class FractalArtTest {
         val input = """
                     |01
                     |23
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(listOf(input), splitSquares(input))
     }
 
@@ -228,7 +228,7 @@ class FractalArtTest {
                     |....
                     |....
                     |#..#
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |##.##.
                     |#..#..
@@ -236,7 +236,7 @@ class FractalArtTest {
                     |##.##.
                     |#..#..
                     |......
-                    """.trimMargin().lines()
+                    """.toSquare()
         val art = FractalArt(listOf(rule))
         assertEquals(expected, art.enhance(input))
     }
@@ -247,7 +247,7 @@ class FractalArtTest {
                     |....
                     |....
                     |#..#
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expectedIter2 = """
                     |##.##.
                     |#..#..
@@ -255,7 +255,7 @@ class FractalArtTest {
                     |##.##.
                     |#..#..
                     |......
-                    """.trimMargin().lines()
+                    """.toSquare()
         val art = FractalArt(example)
         assertEquals(expectedIter1, art.enhance(iterations = 1))
         assertEquals(expectedIter2, art.enhance(iterations = 2))
@@ -278,7 +278,7 @@ class FractalArtTest {
     }
     @Test
     fun `part1 any challenge input matches start pixels`() {
-        val rules = challenge.map { Rule(it) }.filter { it.fromSq.countPixels() == startPattern.countPixels() }
+        val rules = challenge.map { it.toRule() }.filter { it.fromSq.countPixels() == startPattern.countPixels() }
         val anyMatches = rules.firstOrNull { it.matches(startPattern)}
         assertNotNull(anyMatches)
     }
@@ -289,12 +289,12 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |740
                     |851
                     |963
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.rot90())
     }
     @Test
@@ -303,12 +303,12 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |987
                     |654
                     |310
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.rot90().rot90())
     }
     @Test
@@ -317,12 +317,12 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |369
                     |158
                     |047
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.rot90().rot90().rot90())
     }
     @Test
@@ -331,12 +331,12 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.rot90().rot90().rot90().rot90())
     }
     @Test
@@ -345,12 +345,12 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |310
                     |654
                     |987
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.flipV())
     }
     @Test
@@ -359,12 +359,47 @@ class FractalArtTest {
                     |013
                     |456
                     |789
-                    """.trimMargin().lines()
+                    """.toSquare()
         val expected = """
                     |789
                     |456
                     |013
-                    """.trimMargin().lines()
+                    """.toSquare()
         assertEquals(expected, input.flipH())
+    }
+
+    @Test
+    fun `plusRight works`() {
+        val left = """
+                    |00
+                    |00
+                    """.toSquare()
+        val right = """
+                    |11
+                    |11
+                    """.toSquare()
+        val expected = """
+                    |0011
+                    |0011
+                    """.toSquare()
+        assertEquals(expected, left.plusRight(right))
+    }
+    @Test
+    fun `plusBottom works`() {
+        val left = """
+                    |00
+                    |00
+                    """.toSquare()
+        val right = """
+                    |11
+                    |11
+                    """.toSquare()
+        val expected = """
+                    |00
+                    |00
+                    |11
+                    |11
+                    """.toSquare()
+        assertEquals(expected, left.plusBottom(right))
     }
 }
