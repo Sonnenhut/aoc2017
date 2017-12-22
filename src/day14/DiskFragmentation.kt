@@ -22,7 +22,6 @@ class DiskFragmentation {
                 acc + bitSet.toHiLoString()
             }
         }
-    
 
         fun diskRow(key: String): String {
             val hasher = KnotHash()
@@ -72,7 +71,6 @@ class DiskFragmentation {
 
 
 fun List<String>.safeGet(coord: Pair<Int, Int>): Char {
-    var res = "."
     var (row, col) = coord
     return if (0 <= row && row <= this.lastIndex && 0 <= col && col <= this[0].lastIndex) {
         this[row][col]

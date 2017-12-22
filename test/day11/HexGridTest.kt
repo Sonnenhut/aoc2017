@@ -60,15 +60,6 @@ class HexGridTest {
     }
 
     @Test
-    fun `drop once works`() {
-        assertEquals(listOf(1,0,2,0,3),listOf(0,1,0,2,0,3).dropOnce { it == 0 })
-    }
-    @Test
-    fun `map once works`() {
-        assertEquals(listOf(9,1,0,2,0,3), listOf(0,1,0,2,0,3).mapOnce({true},{9}))
-        assertEquals(listOf(0,1,0,2,0,9), listOf(0,1,0,2,0,3).mapOnce({it == 3},{9}))
-    }
-    @Test
     fun `directions are correctly arranged`() {
         assertEquals("n,ne,se,s,sw,nw".toPath(), directionsArranged["n"])
         assertEquals("ne,se,s,sw,nw,n".toPath(), directionsArranged["ne"])
@@ -76,15 +67,6 @@ class HexGridTest {
         assertEquals("s,sw,nw,n,ne,se".toPath(), directionsArranged["s"])
         assertEquals("sw,nw,n,ne,se,s".toPath(), directionsArranged["sw"])
         assertEquals("nw,n,ne,se,s,sw".toPath(), directionsArranged["nw"])
-    }
-    @Test
-    fun `opposite strings n,s s,n ne,sw se,nw`() {
-        assertEquals("s", "n".opposite())
-        assertEquals("n", "s".opposite())
-        assertEquals("se", "nw".opposite())
-        assertEquals("nw", "se".opposite())
-        assertEquals("ne", "sw".opposite())
-        assertEquals("sw", "ne".opposite())
     }
     @Test
     fun `shortcut for {ne,s} is {se}`() {
