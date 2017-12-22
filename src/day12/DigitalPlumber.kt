@@ -16,14 +16,8 @@ class DigitalPlumber {
             val flatGroups = flatGroups(pipes)
 
             return flatGroups.fold(listOf<Set<Int>>()) { acc, group ->
-                var newAcc = acc
-                val toCombine: List<Set<Int>> = acc.filter { it.containsAnyOf(group) }
-                // remove all elements that can be combined
-                toCombine.forEach { elem: Set<Int> -> newAcc = newAcc.minus<Set<Int>>(elem) }
-                // combine everything that can be combined
-                val combined = toCombine.fold (group) { acc, other -> acc + other}
-                newAcc = newAcc.plus<Set<Int>>(combined)
-                newAcc
+                val joinedGroup: Set<Int> = group + acc.filter { it.containsAnyOf(group) }.flatMap { it }.toSet()
+                acc.filter { !it.containsAnyOf(joinedGroup) }.plus<Set<Int>>(joinedGroup)
             }.toSet()
         }
 
