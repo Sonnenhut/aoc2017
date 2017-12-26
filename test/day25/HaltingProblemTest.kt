@@ -34,8 +34,8 @@ class HaltingProblemTest {
             |    - Continue with state A.
             """
         val tm = TuringMachine.valueOf(raw)
-        val expectedStateA = State(mapOf(0 to Instruction(1,+1,'B'), 1 to Instruction(0,-1,'B')))
-        val expectedStateB = State(mapOf(0 to Instruction(1,-1,'A'),1 to Instruction(1,+1,'A')))
+        val expectedStateA = State(mapOf(false to Instruction(true,+1,'B'), true to Instruction(false,-1,'B')))
+        val expectedStateB = State(mapOf(false to Instruction(true,-1,'A'), true to Instruction(true,+1,'A')))
         assertEquals('A',tm.beginState)
         assertEquals(6,tm.steps)
         assertEquals(expectedStateA,tm.states['A'])
